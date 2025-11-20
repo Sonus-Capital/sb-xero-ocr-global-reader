@@ -1,0 +1,14 @@
+{
+  "name": "sb-xero-ocr-file",
+  "version": "0.0.1",
+  "description": "SB Xero per-file PDF text extractor",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "apify": "^3.5.2",
+    "pdf-parse": "^1.1.1"
+  }
+}
