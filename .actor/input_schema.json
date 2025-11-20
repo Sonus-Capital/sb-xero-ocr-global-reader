@@ -38,7 +38,7 @@
       "title": "Master attachment key",
       "type": "string",
       "editor": "textfield",
-      "description": "Your master attachment key used to link back to the Attach Master CSV."
+      "description": "Master attachment key used to link back to the Attach Master CSV."
     },
     "pathLower": {
       "title": "Path lower",
@@ -56,8 +56,7 @@
       "title": "Xero type",
       "type": [
         "string",
-        "number",
-        "null"
+        "number"
       ],
       "editor": "textfield",
       "description": "Xero object type (e.g. ACCREC, ACCPAY). Numbers will be converted to string at runtime if present."
@@ -66,11 +65,10 @@
       "title": "Xero year",
       "type": [
         "string",
-        "number",
-        "null"
+        "number"
       ],
       "editor": "textfield",
-      "description": "Financial year this invoice belongs to (e.g. 2016)."
+      "description": "Financial year this invoice belongs to (e.g. 2016). Numbers will be converted to string at runtime."
     },
     "targetType": {
       "title": "Target type",
