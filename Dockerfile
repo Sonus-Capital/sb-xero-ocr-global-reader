@@ -1,4 +1,4 @@
-FROM apify/actor-node:3.5.2
+FROM apify/actor-node:18
 
 COPY package.json package-lock.json* ./
 RUN npm install --only=prod
