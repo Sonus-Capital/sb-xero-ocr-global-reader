@@ -1,39 +1,78 @@
 {
-  "title": "SB Xero OCR Global Reader",
-  "description": "Reads Xero invoice/attachment manifests and runs OCR + horse tracking.",
+  "title": "SB Xero Global OCR Reader",
+  "description": "Reads a single Xero attachment (PDF) and its metadata, runs OCR / parsing, and returns structured data.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "Year": {
-      "title": "Year",
-      "description": "Financial year this run applies to (e.g. 2016, 2020).",
+    "fileName": {
+      "title": "File name",
       "type": "string",
-      "editor": "textfield",
-      "default": "2016"
-    },
-    "LedgerUrl": {
-      "title": "Ledger CSV URL",
-      "description": "HTTPS URL to the ledger/master financials CSV for this year.",
-      "type": "string",
+      "description": "Logical file name for this attachment (e.g. the Xero attachment file_name).",
       "editor": "textfield"
     },
-    "InvoiceUrl": {
-      "title": "Invoice Manifest CSV URL",
-      "description": "HTTPS URL to the invoice manifest CSV for this year.",
+    "fileContentBase64": {
+      "title": "File content base64",
       "type": "string",
+      "description": "Base64-encoded contents of the PDF file.",
+      "editor": "textarea"
+    },
+    "invoiceId": {
+      "title": "Invoice ID",
+      "type": "string",
+      "description": "Xero invoice ID this attachment belongs to (if available).",
       "editor": "textfield"
     },
-    "ManifestUrl": {
-      "title": "Attachment Manifest CSV URL",
-      "description": "HTTPS URL to the attachment manifest CSV for this year.",
+    "lineItemId": {
+      "title": "Line item ID",
       "type": "string",
+      "description": "Xero line item ID this attachment is mapped to (if available).",
+      "editor": "textfield"
+    },
+    "attachmentId": {
+      "title": "Attachment ID",
+      "type": "string",
+      "description": "Xero attachment ID.",
+      "editor": "textfield"
+    },
+    "masterAttachmentKey": {
+      "title": "Master attachment key",
+      "type": "string",
+      "description": "Global master attachment key used in the manifests.",
+      "editor": "textfield"
+    },
+    "pathLower": {
+      "title": "Path lower",
+      "type": "string",
+      "description": "Dropbox path_lower value for this file, if applicable.",
       "editor": "textfield"
     },
     "likelyTrackingHorse": {
-      "title": "Include likely tracking horse detection",
-      "description": "If true, enable heuristics to flag likely tracking horses even when not explicitly labelled.",
+      "title": "Likely tracking horse",
       "type": "string",
+      "description": "Best-guess horse key / name this attachment is tracking (from the CSV).",
+      "editor": "textfield"
+    },
+    "xeroType": {
+      "title": "Xero type",
+      "type": "string",
+      "description": "Type of Xero document (e.g. ACCREC, ACCPAY, etc.).",
+      "editor": "textfield"
+    },
+    "xeroYear": {
+      "title": "Xero year",
+      "type": "string",
+      "description": "Financial year this record belongs to (e.g. 2016, 2017…).",
+      "editor": "textfield"
+    },
+    "targetType": {
+      "title": "Target type",
+      "type": "string",
+      "description": "Target bucket for this file (e.g. 'invoice', 'orphan', 'issue').",
       "editor": "textfield"
     }
   },
+  "required": [
+    "fileName",
+    "fileContentBase64"
+  ]
 }
