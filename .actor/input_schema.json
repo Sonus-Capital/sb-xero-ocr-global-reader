@@ -1,88 +1,15 @@
 {
   "title": "SB Xero OCR Global Reader",
-  "description": "Reads a single Xero attachment PDF, runs OCR, and returns structured data.",
+  "description": "Reads a single Xero attachment PDF and returns OCR plus metadata.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "fileName": {
-      "title": "File name",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Name of the PDF file, e.g. 2016-000123_Milseain_Invoice.pdf"
-    },
-    "fileContentBase64": {
-      "title": "File content base64",
-      "type": "string",
-      "editor": "textarea",
-      "description": "Base64-encoded contents of the PDF file."
-    },
-    "invoiceId": {
-      "title": "Invoice ID",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Xero invoice ID (or empty if not known)."
-    },
-    "lineItemId": {
-      "title": "Line item ID",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Xero line item ID (or empty if not known)."
-    },
-    "attachmentId": {
-      "title": "Attachment ID",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Xero attachment ID for this PDF."
-    },
-    "masterAttachmentKey": {
-      "title": "Master attachment key",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Master attachment key used to link back to the Attach Master CSV."
-    },
-    "pathLower": {
-      "title": "Path lower",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Dropbox path_lower for the file."
-    },
-    "likelyTrackingHorse": {
-      "title": "Likely tracking horse",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Optional: horse the invoice is most likely associated with (free text, may be blank)."
-    },
-    "xeroType": {
-      "title": "Xero type",
-      "type": [
-        "string",
-        "integer",
-        "number",
-        "boolean"
-      ],
-      "editor": "hidden",
-      "description": "Xero object type (e.g. ACCREC, ACCPAY). Accepts string or other primitive; will be coerced in code."
-    },
-    "xeroYear": {
-      "title": "Xero year",
-      "type": [
-        "string",
-        "integer",
-        "number"
-      ],
-      "editor": "hidden",
-      "description": "Financial year this invoice belongs to (e.g. 2016). Accepts string or number; will be coerced in code."
-    },
-    "targetType": {
-      "title": "Target type",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Processing target for this file, e.g. 'invoice', 'credit-note', 'orphan', etc."
+    "specification": {
+      "title": "Specification",
+      "description": "Payload from Make containing the file and all related metadata.",
+      "type": "object",
+      "editor": "json"
     }
   },
-  "required": [
-    "fileName",
-    "fileContentBase64"
-  ],
-  "additionalProperties": false
+  "required": ["specification"]
 }
