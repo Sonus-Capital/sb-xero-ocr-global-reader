@@ -1,39 +1,45 @@
 {
+  "title": "SB Xero OCR Global Reader",
+  "description": "Reads Xero invoice/attachment manifests and runs OCR + horse tracking.",
   "type": "object",
+  "schemaVersion": 1,
   "properties": {
-    "version": {
-      "title": "Config version",
-      "type": "string",
-      "default": "SB_Attach_Master_v1"
-    },
     "Year": {
       "title": "Year",
-      "type": "integer",
-      "minimum": 2010,
-      "maximum": 2030
+      "description": "Financial year this run applies to (e.g. 2016, 2020).",
+      "type": "string",
+      "editor": "textfield",
+      "default": "2016"
     },
     "LedgerUrl": {
       "title": "Ledger CSV URL",
+      "description": "HTTPS URL to the ledger/master financials CSV for this year.",
       "type": "string",
-      "format": "uri"
+      "editor": "textfield"
     },
     "InvoiceUrl": {
-      "title": "Invoice CSV URL",
+      "title": "Invoice Manifest CSV URL",
+      "description": "HTTPS URL to the invoice manifest CSV for this year.",
       "type": "string",
-      "format": "uri"
+      "editor": "textfield"
     },
     "ManifestUrl": {
-      "title": "Attachment manifest CSV URL",
+      "title": "Attachment Manifest CSV URL",
+      "description": "HTTPS URL to the attachment manifest CSV for this year.",
       "type": "string",
-      "format": "uri"
+      "editor": "textfield"
     },
     "likelyTrackingHorse": {
-      "title": "Likely tracking horse?",
+      "title": "Include likely tracking horse detection",
+      "description": "If true, enable heuristics to flag likely tracking horses even when not explicitly labelled.",
       "type": "boolean",
-      "description": "If true, treat this year as a likely horse-tracking year.",
       "default": false
     }
   },
-  "required": ["Year", "LedgerUrl", "InvoiceUrl", "ManifestUrl"],
-  "additionalProperties": false
+  "required": [
+    "Year",
+    "LedgerUrl",
+    "InvoiceUrl",
+    "ManifestUrl"
+  ]
 }
