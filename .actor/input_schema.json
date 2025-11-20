@@ -1,0 +1,76 @@
+{
+  "title": "SB Xero OCR File Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "fileName": {
+      "title": "File name",
+      "type": "string",
+      "nullable": true,
+      "editor": "text",
+      "description": "Original file name (for logging)."
+    },
+    "fileContentBase64": {
+      "title": "File content (base64)",
+      "type": "string",
+      "editor": "textarea",
+      "description": "Base64-encoded PDF file content.",
+      "sectionCaption": "Required"
+    },
+    "invoiceId": {
+      "title": "Invoice_ID",
+      "type": "string",
+      "nullable": true,
+      "editor": "text"
+    },
+    "lineItemId": {
+      "title": "Line_item_ID",
+      "type": "string",
+      "nullable": true,
+      "editor": "text"
+    },
+    "attachmentId": {
+      "title": "Attachment_ID",
+      "type": "string",
+      "nullable": true,
+      "editor": "text"
+    },
+    "masterAttachmentKey": {
+      "title": "Master_attachment_key",
+      "type": "string",
+      "nullable": true,
+      "editor": "text"
+    },
+    "pathLower": {
+      "title": "Path_lower",
+      "type": "string",
+      "nullable": true,
+      "editor": "text"
+    },
+    "likelyTrackingHorse": {
+      "title": "Likely_tracking_horse",
+      "type": "string",
+      "nullable": true,
+      "editor": "text"
+    },
+    "xeroType": {
+      "title": "Xero_type",
+      "type": "string",
+      "nullable": true,
+      "editor": "text"
+    },
+    "xeroYear": {
+      "title": "Xero_year",
+      "type": "string",
+      "nullable": true,
+      "editor": "text"
+    },
+    "targetType": {
+      "title": "Target_type",
+      "type": "string",
+      "nullable": true,
+      "editor": "text"
+    }
+  },
+  "required": ["fileContentBase64"]
+}
