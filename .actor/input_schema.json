@@ -1,76 +1,70 @@
 {
-  "title": "SB Xero OCR File Input",
+  "title": "SB Xero OCR Global Reader",
+  "description": "Processes a single Xero attachment record (fileName, invoice IDs, base64 PDF) and runs OCR.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
     "fileName": {
       "title": "File name",
       "type": "string",
-      "nullable": true,
-      "editor": "text",
-      "description": "Original file name (for logging)."
-    },
-    "fileContentBase64": {
-      "title": "File content (base64)",
-      "type": "string",
-      "editor": "textarea",
-      "description": "Base64-encoded PDF file content.",
-      "sectionCaption": "Required"
-    },
-    "invoiceId": {
-      "title": "Invoice_ID",
-      "type": "string",
-      "nullable": true,
-      "editor": "text"
-    },
-    "lineItemId": {
-      "title": "Line_item_ID",
-      "type": "string",
-      "nullable": true,
-      "editor": "text"
-    },
-    "attachmentId": {
-      "title": "Attachment_ID",
-      "type": "string",
-      "nullable": true,
-      "editor": "text"
-    },
-    "masterAttachmentKey": {
-      "title": "Master_attachment_key",
-      "type": "string",
-      "nullable": true,
-      "editor": "text"
-    },
-    "pathLower": {
-      "title": "Path_lower",
-      "type": "string",
-      "nullable": true,
-      "editor": "text"
-    },
-    "likelyTrackingHorse": {
-      "title": "Likely_tracking_horse",
-      "type": "string",
-      "nullable": true,
-      "editor": "text"
+      "description": "Original file name of the attachment, e.g. _Son_2024-12-31_7287.50.pdf",
+      "editor": "textfield"
     },
     "xeroType": {
-      "title": "Xero_type",
+      "title": "Xero type",
       "type": "string",
-      "nullable": true,
-      "editor": "text"
+      "description": "Optional Xero type (e.g. ACCPAY, ACCREC). May be null in some flows.",
+      "editor": "textfield"
     },
     "xeroYear": {
-      "title": "Xero_year",
+      "title": "Xero year",
       "type": "string",
-      "nullable": true,
-      "editor": "text"
+      "description": "Financial year label for the invoice/attachment, e.g. 2024.",
+      "editor": "textfield"
+    },
+    "invoiceId": {
+      "title": "Invoice ID",
+      "type": "string",
+      "description": "Xero invoice UUID.",
+      "editor": "textfield"
+    },
+    "pathLower": {
+      "title": "Dropbox path_lower",
+      "type": "string",
+      "description": "Dropbox path_lower for this attachment.",
+      "editor": "textfield"
+    },
+    "lineItemId": {
+      "title": "Line item ID",
+      "type": "string",
+      "description": "Line item or composite ID for this attachment.",
+      "editor": "textfield"
     },
     "targetType": {
-      "title": "Target_type",
+      "title": "Target type",
       "type": "string",
-      "nullable": true,
-      "editor": "text"
+      "description": "Classification of this attachment (e.g. ORPHAN_ATTACHMENT, ATTACHMENT, etc.).",
+      "editor": "textfield"
+    },
+    "attachmentId": {
+      "title": "Attachment ID",
+      "type": "string",
+      "description": "Dropbox attachment ID, e.g. id:oWuGgNQ3SVAAAAAAAAO8fA.",
+      "editor": "textfield"
+    },
+    "fileContentBase64": {
+      "title": "File content (Base64 PDF)",
+      "type": "string",
+      "description": "Base64-encoded PDF content for this attachment.",
+      "editor": "textarea"
     }
   },
-  "required": ["fileContentBase64"]
+  "required": [
+    "fileName",
+    "invoiceId",
+    "pathLower",
+    "attachmentId",
+    "fileContentBase64"
+  ],
+  "additionalProperties": false
 }
