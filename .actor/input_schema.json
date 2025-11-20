@@ -58,8 +58,7 @@
         "string",
         "integer",
         "number",
-        "boolean",
-        "null"
+        "boolean"
       ],
       "editor": "hidden",
       "description": "Xero object type (e.g. ACCREC, ACCPAY). Accepts string or other primitive; will be coerced in code."
@@ -69,8 +68,7 @@
       "type": [
         "string",
         "integer",
-        "number",
-        "null"
+        "number"
       ],
       "editor": "hidden",
       "description": "Financial year this invoice belongs to (e.g. 2016). Accepts string or number; will be coerced in code."
