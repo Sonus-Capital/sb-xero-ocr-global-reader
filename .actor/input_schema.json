@@ -54,15 +54,26 @@
     },
     "xeroType": {
       "title": "Xero type",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Xero object type (e.g. ACCREC, ACCPAY)."
+      "type": [
+        "string",
+        "integer",
+        "number",
+        "boolean",
+        "null"
+      ],
+      "editor": "hidden",
+      "description": "Xero object type (e.g. ACCREC, ACCPAY). Accepts string or other primitive; will be coerced in code."
     },
     "xeroYear": {
       "title": "Xero year",
-      "type": "string",
-      "editor": "textfield",
-      "description": "Financial year this invoice belongs to (e.g. 2016)."
+      "type": [
+        "string",
+        "integer",
+        "number",
+        "null"
+      ],
+      "editor": "hidden",
+      "description": "Financial year this invoice belongs to (e.g. 2016). Accepts string or number; will be coerced in code."
     },
     "targetType": {
       "title": "Target type",
