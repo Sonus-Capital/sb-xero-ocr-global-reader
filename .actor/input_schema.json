@@ -1,78 +1,87 @@
 {
-  "title": "SB Xero Global OCR Reader",
-  "description": "Reads a single Xero attachment (PDF) and its metadata, runs OCR / parsing, and returns structured data.",
+  "title": "SB Xero OCR Global Reader",
+  "description": "Reads a single Xero attachment PDF, runs OCR, and returns structured data.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
     "fileName": {
       "title": "File name",
       "type": "string",
-      "description": "Logical file name for this attachment (e.g. the Xero attachment file_name).",
-      "editor": "textfield"
+      "editor": "textfield",
+      "description": "Name of the PDF file, e.g. 2016-000123_Milseain_Invoice.pdf"
     },
     "fileContentBase64": {
       "title": "File content base64",
       "type": "string",
-      "description": "Base64-encoded contents of the PDF file.",
-      "editor": "textarea"
+      "editor": "textarea",
+      "description": "Base64-encoded contents of the PDF file."
     },
     "invoiceId": {
       "title": "Invoice ID",
       "type": "string",
-      "description": "Xero invoice ID this attachment belongs to (if available).",
-      "editor": "textfield"
+      "editor": "textfield",
+      "description": "Xero invoice ID (or empty if not known)."
     },
     "lineItemId": {
       "title": "Line item ID",
       "type": "string",
-      "description": "Xero line item ID this attachment is mapped to (if available).",
-      "editor": "textfield"
+      "editor": "textfield",
+      "description": "Xero line item ID (or empty if not known)."
     },
     "attachmentId": {
       "title": "Attachment ID",
       "type": "string",
-      "description": "Xero attachment ID.",
-      "editor": "textfield"
+      "editor": "textfield",
+      "description": "Xero attachment ID for this PDF."
     },
     "masterAttachmentKey": {
       "title": "Master attachment key",
       "type": "string",
-      "description": "Global master attachment key used in the manifests.",
-      "editor": "textfield"
+      "editor": "textfield",
+      "description": "Your master attachment key used to link back to the Attach Master CSV."
     },
     "pathLower": {
       "title": "Path lower",
       "type": "string",
-      "description": "Dropbox path_lower value for this file, if applicable.",
-      "editor": "textfield"
+      "editor": "textfield",
+      "description": "Dropbox path_lower for the file."
     },
     "likelyTrackingHorse": {
       "title": "Likely tracking horse",
       "type": "string",
-      "description": "Best-guess horse key / name this attachment is tracking (from the CSV).",
-      "editor": "textfield"
+      "editor": "textfield",
+      "description": "Optional: horse the invoice is most likely associated with (free text, may be blank)."
     },
     "xeroType": {
       "title": "Xero type",
-      "type": "string",
-      "description": "Type of Xero document (e.g. ACCREC, ACCPAY, etc.).",
-      "editor": "textfield"
+      "type": [
+        "string",
+        "number",
+        "null"
+      ],
+      "editor": "textfield",
+      "description": "Xero object type (e.g. ACCREC, ACCPAY). Numbers will be converted to string at runtime if present."
     },
     "xeroYear": {
       "title": "Xero year",
-      "type": "string",
-      "description": "Financial year this record belongs to (e.g. 2016, 2017…).",
-      "editor": "textfield"
+      "type": [
+        "string",
+        "number",
+        "null"
+      ],
+      "editor": "textfield",
+      "description": "Financial year this invoice belongs to (e.g. 2016)."
     },
     "targetType": {
       "title": "Target type",
       "type": "string",
-      "description": "Target bucket for this file (e.g. 'invoice', 'orphan', 'issue').",
-      "editor": "textfield"
+      "editor": "textfield",
+      "description": "Processing target for this file, e.g. 'invoice', 'credit-note', 'orphan', etc."
     }
   },
   "required": [
     "fileName",
     "fileContentBase64"
-  ]
+  ],
+  "additionalProperties": false
 }
