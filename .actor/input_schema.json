@@ -32,8 +32,8 @@
     "likelyTrackingHorse": {
       "title": "Include likely tracking horse detection",
       "description": "If true, enable heuristics to flag likely tracking horses even when not explicitly labelled.",
-      "type": "boolean",
-      "default": false
+      "type": "string",
+      "editor": "textfield"
     }
   },
 }
