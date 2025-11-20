@@ -9,35 +9,22 @@ Actor.main(async () => {
 
         const input = (await Actor.getInput()) ?? {};
 
-        // 1) Expect { json: "<stringified payload>" }
-        if (typeof input.json !== 'string' || !input.json.trim()) {
-            throw new Error("Input must contain a non-empty 'json' string field.");
-        }
+        // Helper: normalise possibly-null values to strings
+        const toStr = (v) => (v === null || v === undefined ? '' : String(v));
 
-        let spec;
-        try {
-            spec = JSON.parse(input.json);
-        } catch (err) {
-            log.error('Failed to JSON.parse input.json', { message: err?.message });
-            throw new Error('Invalid JSON in input.json');
-        }
+        const fileName = toStr(input.fileName || 'file.pdf');
+        const fileContentBase64 = input.fileContentBase64 || '';
 
-        // 2) Now work with the inner object (what Make created)
-        const {
-            fileName = 'file.pdf',
-            fileContentBase64,
-            invoiceId = '',
-            lineItemId = '',
-            attachmentId = '',
-            masterAttachmentKey = '',
-            pathLower = '',
-            likelyTrackingHorse = '',
-            xeroType = '',
-            xeroYear = '',
-            targetType = '',
-        } = spec;
+        const invoiceId = toStr(input.invoiceId);
+        const lineItemId = toStr(input.lineItemId);
+        const attachmentId = toStr(input.attachmentId);
+        const masterAttachmentKey = toStr(input.masterAttachmentKey);
+        const pathLower = toStr(input.pathLower);
+        const likelyTrackingHorse = toStr(input.likelyTrackingHorse);
+        const xeroType = toStr(input.xeroType);
+        const xeroYear = toStr(input.xeroYear);
+        const targetType = toStr(input.targetType);
 
-        // 3) If we don't have the file bytes, log + push a NO_FILE row
         if (!fileContentBase64) {
             log.warning('No fileContentBase64 provided – exiting (NO_FILE).');
 
@@ -68,16 +55,13 @@ Actor.main(async () => {
             return;
         }
 
-        // 4) Decode the Base64 → PDF buffer
         const buffer = Buffer.from(fileContentBase64, 'base64');
 
-        // 5) Write to temp file (handy for debugging)
         const tmpDir = await fs.mkdtemp(path.join(process.cwd(), 'file-'));
         const pdfPath = path.join(tmpDir, fileName || 'file.pdf');
         await fs.writeFile(pdfPath, buffer);
         log.info('PDF written to temp file', { pdfPath, size: buffer.length });
 
-        // 6) Parse PDF text
         let text = '';
         let hasTextLayer = false;
 
@@ -90,7 +74,6 @@ Actor.main(async () => {
             log.error('pdf-parse failed', { message: err?.message });
         }
 
-        // 7) Push a row into dataset
         await Actor.pushData({
             Invoice_ID: invoiceId,
             Line_item_ID: lineItemId,
@@ -107,7 +90,6 @@ Actor.main(async () => {
             File_size_bytes: buffer.length,
         });
 
-        // 8) KV output
         await Actor.setValue('OUTPUT', {
             ok: true,
             invoiceId,
