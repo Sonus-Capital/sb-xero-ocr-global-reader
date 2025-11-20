@@ -1,70 +1,39 @@
 {
-  "title": "SB Xero OCR Global Reader",
-  "description": "Processes a single Xero attachment record (fileName, invoice IDs, base64 PDF) and runs OCR.",
   "type": "object",
-  "schemaVersion": 1,
   "properties": {
-    "fileName": {
-      "title": "File name",
+    "version": {
+      "title": "Config version",
       "type": "string",
-      "description": "Original file name of the attachment, e.g. _Son_2024-12-31_7287.50.pdf",
-      "editor": "textfield"
+      "default": "SB_Attach_Master_v1"
     },
-    "xeroType": {
-      "title": "Xero type",
-      "type": "string",
-      "description": "Optional Xero type (e.g. ACCPAY, ACCREC). May be null in some flows.",
-      "editor": "textfield"
+    "Year": {
+      "title": "Year",
+      "type": "integer",
+      "minimum": 2010,
+      "maximum": 2030
     },
-    "xeroYear": {
-      "title": "Xero year",
+    "LedgerUrl": {
+      "title": "Ledger CSV URL",
       "type": "string",
-      "description": "Financial year label for the invoice/attachment, e.g. 2024.",
-      "editor": "textfield"
+      "format": "uri"
     },
-    "invoiceId": {
-      "title": "Invoice ID",
+    "InvoiceUrl": {
+      "title": "Invoice CSV URL",
       "type": "string",
-      "description": "Xero invoice UUID.",
-      "editor": "textfield"
+      "format": "uri"
     },
-    "pathLower": {
-      "title": "Dropbox path_lower",
+    "ManifestUrl": {
+      "title": "Attachment manifest CSV URL",
       "type": "string",
-      "description": "Dropbox path_lower for this attachment.",
-      "editor": "textfield"
+      "format": "uri"
     },
-    "lineItemId": {
-      "title": "Line item ID",
-      "type": "string",
-      "description": "Line item or composite ID for this attachment.",
-      "editor": "textfield"
-    },
-    "targetType": {
-      "title": "Target type",
-      "type": "string",
-      "description": "Classification of this attachment (e.g. ORPHAN_ATTACHMENT, ATTACHMENT, etc.).",
-      "editor": "textfield"
-    },
-    "attachmentId": {
-      "title": "Attachment ID",
-      "type": "string",
-      "description": "Dropbox attachment ID, e.g. id:oWuGgNQ3SVAAAAAAAAO8fA.",
-      "editor": "textfield"
-    },
-    "fileContentBase64": {
-      "title": "File content (Base64 PDF)",
-      "type": "string",
-      "description": "Base64-encoded PDF content for this attachment.",
-      "editor": "textarea"
+    "likelyTrackingHorse": {
+      "title": "Likely tracking horse?",
+      "type": "boolean",
+      "description": "If true, treat this year as a likely horse-tracking year.",
+      "default": false
     }
   },
-  "required": [
-    "fileName",
-    "invoiceId",
-    "pathLower",
-    "attachmentId",
-    "fileContentBase64"
-  ],
+  "required": ["Year", "LedgerUrl", "InvoiceUrl", "ManifestUrl"],
   "additionalProperties": false
 }
