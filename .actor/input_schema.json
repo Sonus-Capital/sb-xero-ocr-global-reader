@@ -54,21 +54,15 @@
     },
     "xeroType": {
       "title": "Xero type",
-      "type": [
-        "string",
-        "number"
-      ],
+      "type": "string",
       "editor": "textfield",
-      "description": "Xero object type (e.g. ACCREC, ACCPAY). Numbers will be converted to string at runtime if present."
+      "description": "Xero object type (e.g. ACCREC, ACCPAY)."
     },
     "xeroYear": {
       "title": "Xero year",
-      "type": [
-        "string",
-        "number"
-      ],
+      "type": "string",
       "editor": "textfield",
-      "description": "Financial year this invoice belongs to (e.g. 2016). Numbers will be converted to string at runtime."
+      "description": "Financial year this invoice belongs to (e.g. 2016)."
     },
     "targetType": {
       "title": "Target type",
