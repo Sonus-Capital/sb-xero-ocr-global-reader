@@ -2,8 +2,11 @@
   "name": "sb-xero-ocr-global-reader",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "start": "node main.js"
+  },
   "dependencies": {
-    "apify": "^3.0.0",
+    "apify": "^3.0.4",
     "pdf-parse": "^1.1.1"
   }
 }
