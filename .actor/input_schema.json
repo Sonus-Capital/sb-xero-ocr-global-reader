@@ -1,15 +1,16 @@
 {
   "title": "SB Xero OCR Global Reader",
-  "description": "Reads a single Xero attachment payload (stringified JSON) and performs PDF text extraction.",
+  "description": "Reads a single Xero attachment payload and extracts PDF text. Input is passed through from Make as-is.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
     "json": {
-      "title": "Attachment JSON payload",
+      "title": "Optional debug json (unused)",
       "type": "string",
-      "description": "Stringified JSON with the attachment metadata and fileContentBase64.",
+      "description": "Optional raw JSON string for debugging. Not required by the actor.",
       "editor": "textarea"
     }
   },
-  "required": ["json"]
+  "required": [],
+  "additionalProperties": true
 }
