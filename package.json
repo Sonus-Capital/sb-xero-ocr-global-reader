@@ -1,14 +1,14 @@
 {
-  "name": "sb-xero-ocr-file",
-  "version": "0.0.1",
-  "description": "SB Xero per-file PDF text extractor",
+  "name": "sb-xero-ocr-global-reader",
+  "version": "0.1.0",
+  "description": "Xero OCR global reader actor",
   "main": "main.js",
   "type": "module",
   "scripts": {
     "start": "node main.js"
   },
   "dependencies": {
-    "apify": "^3.5.2",
-    "pdf-parse": "^1.1.1"
+    "apify": "^3.0.0",
+    "axios": "^1.7.0"
   }
 }
