@@ -36,10 +36,4 @@
       "default": false
     }
   },
-  "required": [
-    "Year",
-    "LedgerUrl",
-    "InvoiceUrl",
-    "ManifestUrl"
-  ]
 }
