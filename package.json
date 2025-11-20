@@ -1,15 +1,9 @@
 {
   "name": "sb-xero-ocr-global-reader",
-  "version": "0.1.0",
-  "description": "Xero OCR global reader actor",
-  "main": "main.js",
+  "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "start": "node main.js"
-  },
   "dependencies": {
     "apify": "^3.0.0",
-    "pdf-parse": "^1.1.1",
-    "axios": "^1.7.0"
+    "pdf-parse": "^1.1.1"
   }
 }
