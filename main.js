@@ -8,7 +8,6 @@ Actor.main(async () => {
         log.info('*** SB Xero OCR FILE: Actor.main started');
 
         const input = (await Actor.getInput()) ?? {};
-
         const {
             fileName = 'file.pdf',
             fileContentBase64,
@@ -23,62 +22,46 @@ Actor.main(async () => {
             targetType = '',
         } = input;
 
-        // If there's no file at all, just record the failure in KEY-VALUE store
-        // and do NOT push a dataset row.
         if (!fileContentBase64) {
-            log.warning('No fileContentBase64 provided – exiting without dataset row.', {
-                invoiceId,
-                lineItemId,
-            });
-
+            log.warning('No fileContentBase64 provided – exiting.');
             await Actor.setValue('OUTPUT', {
                 ok: false,
                 reason: 'NO_FILE',
                 invoiceId,
                 lineItemId,
             });
-
             return;
         }
 
         const buffer = Buffer.from(fileContentBase64, 'base64');
-
-        // (Temp file only kept so pdf-parse has something sane if needed later.)
         const tmpDir = await fs.mkdtemp(path.join(process.cwd(), 'file-'));
         const pdfPath = path.join(tmpDir, fileName || 'file.pdf');
+
         await fs.writeFile(pdfPath, buffer);
         log.info('PDF written to temp file', { pdfPath, size: buffer.length });
 
-        let rawText = '';
+        let text = '';
+        let hasTextLayer = false;
 
         try {
             const result = await pdfParse(buffer);
-            rawText = result.text || '';
-            log.info('PDF parsed', { rawLength: rawText.length });
+            // Normalise to LF newlines, always a string
+            text = (result.text || '').replace(/\r\n/g, '\n');
+            hasTextLayer = !!text.trim();
+
+            log.info('pdf-parse completed', {
+                textLength: text.length,
+                hasTextLayer,
+            });
+
+            if (!hasTextLayer) {
+                log.warning('No text layer detected – likely image-only scanned PDF');
+            }
         } catch (err) {
             log.error('pdf-parse failed', { message: err?.message });
         }
 
-        // 🔧 NORMALISE TEXT FOR CSV / MAKE
-        // - remove control chars
-        // - turn all newlines/tabs into spaces
-        // - collapse multiple spaces to one
-        let cleanedText = (rawText || '')
-            // strip control characters (including the \u0000, \u0001 etc you were seeing)
-            .replace(/[\u0000-\u001F\u007F-\u009F]/g, ' ')
-            // normalise newlines/tabs to spaces
-            .replace(/[\r\n\t]+/g, ' ')
-            // collapse all whitespace runs to a single space
-            .replace(/\s+/g, ' ')
-            .trim();
-
-        // If it's *really* long you can optionally truncate it here, e.g.:
-        // const MAX_LEN = 20000;
-        // if (cleanedText.length > MAX_LEN) {
-        //     cleanedText = cleanedText.slice(0, MAX_LEN);
-        // }
-
-        // Final dataset row – same field names as before, but Ocr_text is now flat.
+        // One row per file – all fields inline, including Ocr_text + Has_text_layer
         await Actor.pushData({
             Invoice_ID: invoiceId,
             Line_item_ID: lineItemId,
@@ -90,8 +73,9 @@ Actor.main(async () => {
             Xero_type: xeroType ?? '',
             Xero_year: xeroYear ?? '',
             Target_type: targetType,
-            Ocr_text: cleanedText,
-            // 🚫 No Has_text_layer / File_size_bytes any more – keeps Make CSV schema simple.
+            Ocr_text: text,
+            Has_text_layer: hasTextLayer,
+            File_size_bytes: buffer.length,
         });
 
         await Actor.setValue('OUTPUT', {
@@ -99,7 +83,8 @@ Actor.main(async () => {
             invoiceId,
             lineItemId,
             attachmentId,
-            textLength: cleanedText.length,
+            hasTextLayer,
+            textLength: text.length,
         });
 
         log.info('*** SB Xero OCR FILE: Actor.main finished');
